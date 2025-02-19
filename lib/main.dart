@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,6 +17,31 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   int happinessLevel = 50;
   int hungerLevel = 50;
   final TextEditingController _nameController = TextEditingController();
+  Timer? _hungerTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startHungerTimer();
+  }
+
+  @override
+  void dispose() {
+    _hungerTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startHungerTimer() {
+    _hungerTimer = Timer.periodic(Duration(seconds: 30), (timer) {
+      setState(() {
+        hungerLevel = (hungerLevel + 5).clamp(0, 100);
+        if (hungerLevel > 100) {
+          hungerLevel = 100;
+          happinessLevel = (happinessLevel - 20).clamp(0, 100);
+        }
+      });
+    });
+  }
 
   Color getPetColor() {
     if (happinessLevel > 70) {
@@ -141,4 +167,3 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     );
   }
 }
-
