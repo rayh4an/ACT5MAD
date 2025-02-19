@@ -12,11 +12,20 @@ class DigitalPetApp extends StatefulWidget {
 }
 
 class _DigitalPetAppState extends State<DigitalPetApp> {
-  String petName = "Your Pet";
+  String petName = "Minnu";
   int happinessLevel = 50;
   int hungerLevel = 50;
 
-  // Function to increase happiness and update hunger when playing with the pet
+  Color getPetColor() {
+    if (happinessLevel > 70) {
+      return Colors.green; // Happy
+    } else if (happinessLevel >= 30) {
+      return Colors.yellow; // Neutral
+    } else {
+      return Colors.red; // Unhappy
+    }
+  }
+
   void _playWithPet() {
     setState(() {
       happinessLevel = (happinessLevel + 10).clamp(0, 100);
@@ -24,7 +33,6 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     });
   }
 
-  // Function to decrease hunger and update happiness when feeding the pet
   void _feedPet() {
     setState(() {
       hungerLevel = (hungerLevel - 10).clamp(0, 100);
@@ -32,7 +40,6 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     });
   }
 
-  // Update happiness based on hunger level
   void _updateHappiness() {
     if (hungerLevel < 30) {
       happinessLevel = (happinessLevel - 20).clamp(0, 100);
@@ -41,7 +48,6 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     }
   }
 
-  // Increase hunger level slightly when playing with the pet
   void _updateHunger() {
     hungerLevel = (hungerLevel + 5).clamp(0, 100);
     if (hungerLevel > 100) {
@@ -60,6 +66,15 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: getPetColor(),
+                shape: BoxShape.circle,
+              ),
+            ),
+            SizedBox(height: 16.0),
             Text(
               'Name: $petName',
               style: TextStyle(fontSize: 20.0),
@@ -90,3 +105,4 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     );
   }
 }
+
