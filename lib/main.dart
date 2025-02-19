@@ -26,6 +26,16 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     }
   }
 
+  String getPetMood() {
+    if (happinessLevel > 70) {
+      return '😊 Happy 😊';
+    } else if (happinessLevel >= 30) {
+      return '😐 Neutral 😐';
+    } else {
+      return '😞 Sad 😞';
+    }
+  }
+
   void _playWithPet() {
     setState(() {
       happinessLevel = (happinessLevel + 10).clamp(0, 100);
@@ -77,6 +87,11 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
             SizedBox(height: 16.0),
             Text(
               'Name: $petName',
+              style: TextStyle(fontSize: 20.0),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Mood: ${getPetMood()}',
               style: TextStyle(fontSize: 20.0),
             ),
             SizedBox(height: 16.0),
