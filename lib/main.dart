@@ -15,6 +15,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   String petName = "Minnu";
   int happinessLevel = 50;
   int hungerLevel = 50;
+  final TextEditingController _nameController = TextEditingController();
 
   Color getPetColor() {
     if (happinessLevel > 70) {
@@ -66,6 +67,13 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     }
   }
 
+  void _setPetName() {
+    setState(() {
+      petName = _nameController.text.isNotEmpty ? _nameController.text : petName;
+    });
+    _nameController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +96,19 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
             Text(
               'Name: $petName',
               style: TextStyle(fontSize: 20.0),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Enter Pet Name',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _setPetName,
+              child: Text('Set Pet Name'),
             ),
             SizedBox(height: 16.0),
             Text(
